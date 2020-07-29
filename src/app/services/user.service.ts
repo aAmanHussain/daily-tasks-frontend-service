@@ -17,7 +17,10 @@ export class UserService {
   addTodo(data) {
     return this.http.post<any[]>(`${environment.baseAPIUrl}to-do`, data);
   }
-  deleteTodo(id: number) {
+  updateTodo(id: string, data: any) {
+    return this.http.patch<any[]>(`${environment.baseAPIUrl}to-do/${id}`, data);
+  }
+  deleteTodo(id: string) {
     return this.http.delete(`${environment.baseAPIUrl}to-do/${id}`);
   }
 }

@@ -69,7 +69,79 @@
 
   <hr />
 
-  <div class="list-group">
+  <ul class="list-group">
+    <li class="list-group-item list-group-item-action active">
+      To Do List( Click on the TO DO item to mark it DONE )
+    </li>
+    <li class="list-group-item" *ngFor="let todo of todoList; let i = index">
+      <div class="row">
+        <div class="col-md-10">
+          <span>{{ todo.title + ' - ' + todo.description | titlecase }}</span>
+        </div>
+        <div class="col-md-2">
+          <i
+            class="fa fa-pencil"
+            aria-hidden="true"
+            (click)="toggleEdit(i)"
+          ></i>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="todo.edit">
+        <div class="offset-md-3 col-md-6">
+          <form [formGroup]="updateTodoForm" (ngSubmit)="updateTodo(i)">
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                placeholder="Enter title"
+                formControlName="title"
+              />
+            </div>
+            <div class="form-group" *ngIf="updateTodoForm.get('title').errors">
+              <p
+                class="text-danger"
+                *ngIf="
+                  updateTodoForm.get('title').errors &&
+                  updateTodoForm.get('title').errors.required
+                "
+              >
+                Title is required
+              </p>
+            </div>
+
+            <div class="form-group">
+              <textarea
+                class="form-control"
+                id="description"
+                placeholder="Enter description"
+                formControlName="description"
+              ></textarea>
+            </div>
+            <div
+              class="form-group"
+              *ngIf="updateTodoForm.get('description').errors"
+            >
+              <p
+                class="text-danger"
+                *ngIf="
+                  updateTodoForm.get('description').errors &&
+                  updateTodoForm.get('description').errors.required
+                "
+              >
+                Description is required
+              </p>
+            </div>
+
+            <button type="submit" class="btn btn-primary">SUBMIT</button>
+          </form>
+        </div>
+      </div>
+    </li>
+  </ul>
+
+  <!-- <div class="list-group">
     <button
       type="button"
       disabled
@@ -98,5 +170,5 @@
         No To Do Items Found
       </button>
     </ng-container>
-  </div>
+  </div> -->
 </div>

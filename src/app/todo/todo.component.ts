@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TodoComponent implements OnInit {
   todoForm: FormGroup;
+  updateTodoForm: FormGroup;
   todoList: any[];
   submitted: boolean;
 
@@ -20,6 +21,11 @@ export class TodoComponent implements OnInit {
   ngOnInit() {
     this.submitted = false;
     this.todoForm = this.formBuilder.group({
+      title: [null, Validators.required],
+      description: [null, Validators.required]
+    });
+
+    this.updateTodoForm = this.formBuilder.group({
       title: [null, Validators.required],
       description: [null, Validators.required]
     });
@@ -64,6 +70,31 @@ export class TodoComponent implements OnInit {
     this.userService.deleteTodo(todItem._id).subscribe(
       (res: any) => {
         this.todoList[idx] = { ...this.todoList[idx], deleted: true };
+        alert(res.message);
+      },
+      err => {
+        alert(err.message);
+      }
+    );
+  }
+
+  toggleEdit(i: number) {
+    this.todoList.forEach(todo => (todo.edit = false));
+    this.updateTodoForm.patchValue({
+      title: this.todoList[i].title,
+      description: this.todoList[i].description
+    });
+    this.todoList[i].edit = true;
+  }
+
+  updateTodo(idx: number) {
+    if (this.updateTodoForm.invalid) {
+      return;
+    }
+    const todoItem = { ...this.todoList[idx], ...this.updateTodoForm.value };
+    this.userService.updateTodo(todoItem._id, todoItem).subscribe(
+      (res: any) => {
+        this.todoList[idx] = { ...todoItem, edit: false };
         alert(res.message);
       },
       err => {
