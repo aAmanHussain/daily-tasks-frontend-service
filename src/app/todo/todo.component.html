@@ -71,7 +71,7 @@
 
   <ul class="list-group">
     <li class="list-group-item list-group-item-action active">
-      To Do List( Click on the TO DO item to mark it DONE )
+      To Do List
     </li>
     <li
       class="list-group-item"
@@ -151,36 +151,14 @@
         </div>
       </div>
     </li>
-  </ul>
-
-  <!-- <div class="list-group">
-    <button
-      type="button"
-      disabled
-      class="list-group-item list-group-item-action active"
-    >
-      To Do List( Click on the TO DO item to mark it DONE )
-    </button>
-    <ng-container *ngFor="let todo of todoList; let i = index">
-      <button
-        type="button"
-        [disabled]="todo.deleted"
-        class="list-group-item list-group-item-action"
-        (click)="doneTodo(i)"
-        [ngClass]="{ 'strike-through': todo.deleted }"
-      >
-        {{ todo.title + ' - ' + todo.description | titlecase }}
-      </button>
-    </ng-container>
-
     <ng-container *ngIf="todoList.length === 0">
-      <button
-        type="button"
-        disabled
-        class="list-group-item list-group-item-action"
-      >
-        No To Do Items Found
-      </button>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-md-10">
+            <span>No To Do Items Found</span>
+          </div>
+        </div>
+      </li>
     </ng-container>
-  </div> -->
+  </ul>
 </div>
