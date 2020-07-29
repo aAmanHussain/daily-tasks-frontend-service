@@ -73,16 +73,28 @@
     <li class="list-group-item list-group-item-action active">
       To Do List( Click on the TO DO item to mark it DONE )
     </li>
-    <li class="list-group-item" *ngFor="let todo of todoList; let i = index">
+    <li
+      class="list-group-item"
+      *ngFor="let todo of todoList; let i = index"
+      [ngClass]="{ 'strike-through': todo.deleted }"
+    >
       <div class="row">
         <div class="col-md-10">
           <span>{{ todo.title + ' - ' + todo.description | titlecase }}</span>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2 text-center">
           <i
-            class="fa fa-pencil"
+            *ngIf="!todo.deleted"
+            class="fa fa-pencil todo-margin"
             aria-hidden="true"
             (click)="toggleEdit(i)"
+          ></i>
+
+          <i
+            *ngIf="!todo.deleted && !todo.edit"
+            class="fa fa-check todo-margin"
+            aria-hidden="true"
+            (click)="doneTodo(i)"
           ></i>
         </div>
       </div>
